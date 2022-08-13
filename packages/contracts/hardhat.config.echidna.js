@@ -3,12 +3,10 @@ require("@nomiclabs/hardhat-ethers");
 require("solidity-coverage");
 require("hardhat-gas-reporter");
 
-const accountsList = [
-    {
-        privateKey: "0x60ddFE7f579aB6867cbE7A2Dc03853dC141d7A4aB6DBEFc0Dae2d2B1Bd4e487F",
-        balance: "0xffffffffffffffffffffffff"
-    },
-]
+const accountsList = [{
+    privateKey: "6110107ee5376c20acadfe82498b4ba93c9fd44a62156e20cfe4563326fd7388",
+    balance: "0xffffffffffffffffffffffff"
+}, ]
 
 module.exports = {
     paths: {
@@ -25,7 +23,7 @@ module.exports = {
     networks: {
         buidlerevm: {
             accounts: accountsList,
-            gas: 1000000000,  // tx gas limit
+            gas: 1000000000, // tx gas limit
             blockGasLimit: 1000000000,
             gasPrice: 20000000000,
             allowUnlimitedContractSize: true

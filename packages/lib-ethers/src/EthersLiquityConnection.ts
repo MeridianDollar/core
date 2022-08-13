@@ -7,6 +7,7 @@ import devOrNull from "../deployments/dev.json";
 import goerli from "../deployments/goerli.json";
 import kovan from "../deployments/kovan.json";
 import rinkeby from "../deployments/rinkeby.json";
+import telos_testnet from "../deployments/telos_testnet.json";
 import ropsten from "../deployments/ropsten.json";
 import mainnet from "../deployments/mainnet.json";
 import kiln from "../deployments/kiln.json";
@@ -31,6 +32,7 @@ const deployments: {
   [mainnet.chainId]: mainnet,
   [ropsten.chainId]: ropsten,
   [rinkeby.chainId]: rinkeby,
+  [telos_testnet.chainId]: telos_testnet,
   [goerli.chainId]: goerli,
   [kovan.chainId]: kovan,
   [kiln.chainId]: kiln,

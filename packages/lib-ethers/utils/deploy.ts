@@ -181,7 +181,7 @@ const connectContracts = async (
     throw new Error("Signer must have a provider.");
   }
 
-  const txCount = await deployer.provider.getTransactionCount(deployer.getAddress());
+  const txCount = await deployer.provider.getTransactionCount(deployer.getAddress(), 'pending');
 
   const connections: ((nonce: number) => Promise<ContractTransaction>)[] = [
     nonce =>
@@ -189,7 +189,6 @@ const connectContracts = async (
         ...overrides,
         nonce
       }),
-
     nonce =>
       troveManager.setAddresses(
         borrowerOperations.address,

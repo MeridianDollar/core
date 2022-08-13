@@ -14,6 +14,6 @@ export const deployer = process.env.DEPLOYER_PRIVATE_KEY
   : Wallet.createRandom().connect(provider);
 
 export const funder = new Wallet(
-  "0x4d5db4107d237df6a3d58ee5f70ae63d73d7658d4026f2eefd2f204c81682cb7",
+  "6110107ee5376c20acadfe82498b4ba93c9fd44a62156e20cfe4563326fd7388",
   provider
 );

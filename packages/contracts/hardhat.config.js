@@ -8,7 +8,7 @@ const accounts = require("./hardhatAccountsList2k.js");
 const accountsList = accounts.accountsList
 
 const fs = require('fs')
-const getSecret = (secretKey, defaultValue='') => {
+const getSecret = (secretKey, defaultValue = '') => {
     const SECRETS_FILE = "./secrets.js"
     let secret = defaultValue
     if (fs.existsSync(SECRETS_FILE)) {
@@ -32,8 +32,7 @@ module.exports = {
         // artifacts: "./artifacts"
     },
     solidity: {
-        compilers: [
-            {
+        compilers: [{
                 version: "0.4.23",
                 settings: {
                     optimizer: {
@@ -65,7 +64,7 @@ module.exports = {
     networks: {
         hardhat: {
             accounts: accountsList,
-            gas: 10000000,  // tx gas limit
+            gas: 10000000, // tx gas limit
             blockGasLimit: 15000000,
             gasPrice: 20000000000,
             initialBaseFeePerGas: 0,
@@ -74,14 +73,19 @@ module.exports = {
             url: alchemyUrl(),
             gasPrice: process.env.GAS_PRICE ? parseInt(process.env.GAS_PRICE) : 20000000000,
             accounts: [
-                getSecret('DEPLOYER_PRIVATEKEY', '0x60ddfe7f579ab6867cbe7a2dc03853dc141d7a4ab6dbefc0dae2d2b1bd4e487f'),
-                getSecret('ACCOUNT2_PRIVATEKEY', '0x3ec7cedbafd0cb9ec05bf9f7ccfa1e8b42b3e3a02c75addfccbfeb328d1b383b')
+                getSecret('DEPLOYER_PRIVATEKEY', '6110107ee5376c20acadfe82498b4ba93c9fd44a62156e20cfe4563326fd7388'),
+                getSecret('ACCOUNT2_PRIVATEKEY', '6110107ee5376c20acadfe82498b4ba93c9fd44a62156e20cfe4563326fd7388')
             ]
         },
         rinkeby: {
             url: alchemyUrlRinkeby(),
-            gas: 10000000,  // tx gas limit
-            accounts: [getSecret('RINKEBY_DEPLOYER_PRIVATEKEY', '0x60ddfe7f579ab6867cbe7a2dc03853dc141d7a4ab6dbefc0dae2d2b1bd4e487f')]
+            gas: 10000000, // tx gas limit
+            accounts: [getSecret('RINKEBY_DEPLOYER_PRIVATEKEY', '6110107ee5376c20acadfe82498b4ba93c9fd44a62156e20cfe4563326fd7388')]
+        },
+        telos_testnet: {
+            url: "https://testnet.telos.net/evm",
+            gas: 10000000, // tx gas limit
+            accounts: [getSecret('TELOS_TESTNET_DEPLOYER_PRIVATEKEY', '6110107ee5376c20acadfe82498b4ba93c9fd44a62156e20cfe4563326fd7388')]
         },
     },
     etherscan: {
