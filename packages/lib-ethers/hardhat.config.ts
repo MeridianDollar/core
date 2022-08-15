@@ -75,8 +75,8 @@ const oracleAddresses = {
     tellor: "0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0" // Core
   },
   telos_testnet: {
-    chainlink: "",
-    tellor: "" // Core
+    chainlink: "0x9326BFA02ADD2366b30bacB125260Af641031331",
+    tellor: "0x20374E579832859f180536A69093A126Db1c8aE9" // Core
   },
   kovan: {
     chainlink: "0x9326BFA02ADD2366b30bacB125260Af641031331",
