@@ -1,12 +1,12 @@
-eth-mutants
+tlos-mutants
 ===========
 
-eth-mutants is a mutation testing tool for Solidity contracts.
+tlos-mutants is a mutation testing tool for Solidity contracts.
 
 ## Installation
 
 ```
-npm install eth-mutants
+npm install tlos-mutants
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ The `test` command will start applying mutations and running your tests to
 check if they pass. It will report the result of each mutation.
 
 ```
-eth-mutants test
+tlos-mutants test
 ```
 
 This tools makes some important assumptions about your workspace, which should
