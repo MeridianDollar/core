@@ -73,7 +73,7 @@ const StakingManagerActionDescription: React.FC<StakingManagerActionDescriptionP
 }) => {
   const stakeLQTY = change.stakeLQTY?.prettify().concat(" ", GT);
   const unstakeLQTY = change.unstakeLQTY?.prettify().concat(" ", GT);
-  const collateralGain = originalStake.collateralGain.nonZero?.prettify(4).concat(" ETH");
+  const collateralGain = originalStake.collateralGain.nonZero?.prettify(4).concat(" TLOS");
   const lusdGain = originalStake.lusdGain.nonZero?.prettify().concat(" ", COIN);
 
   if (originalStake.isEmpty && stakeLQTY) {
@@ -125,7 +125,7 @@ export const StakingManager: React.FC = () => {
   const [validChange, description] = !change
     ? [undefined, undefined]
     : change.stakeLQTY?.gt(lqtyBalance)
-    ? [
+      ? [
         undefined,
         <ErrorDescription>
           The amount you're trying to stake exceeds your balance by{" "}
@@ -135,7 +135,7 @@ export const StakingManager: React.FC = () => {
           .
         </ErrorDescription>
       ]
-    : [change, <StakingManagerActionDescription originalStake={originalStake} change={change} />];
+      : [change, <StakingManagerActionDescription originalStake={originalStake} change={change} />];
 
   const makingNewStake = originalStake.isEmpty;
 

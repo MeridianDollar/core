@@ -72,7 +72,7 @@ LQTY_total_supply=100000000
 
 """**LQTY Endogenous Price**
 
-The staked LQTY pool earning consists of the issuance fee revenue and redemption fee revenue
+The staked MER pool earning consists of the issuance fee revenue and redemption fee revenue
 > $R_t^q = R_t^i + R_t^r.$
 
 From period 721 onwards, using the data in the last 720 periods (i.e. the last 30 days), we can calculate the annualized earning

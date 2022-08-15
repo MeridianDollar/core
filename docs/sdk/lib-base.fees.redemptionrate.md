@@ -27,9 +27,9 @@ redemptionRate(redeemedFractionOfSupply?: Decimalish, when?: Date): Decimal;
 
 By default, the fee is calculated at the time of the latest block. This can be overridden using the `when` parameter.
 
-Unlike the borrowing rate, the redemption rate depends on the amount being redeemed. To be more precise, it depends on the fraction of the redeemed amount compared to the total LUSD supply, which must be passed as a parameter.
+Unlike the borrowing rate, the redemption rate depends on the amount being redeemed. To be more precise, it depends on the fraction of the redeemed amount compared to the total USM supply, which must be passed as a parameter.
 
-To calculate the redemption fee in LUSD, multiply the redeemed LUSD amount with the redemption rate.
+To calculate the redemption fee in LUSD, multiply the redeemed USM amount with the redemption rate.
 
 ## Example
 

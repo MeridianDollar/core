@@ -35,9 +35,9 @@ export const validateStabilityDepositChange = (
     haveUndercollateralizedTroves
   }: StabilityDepositChangeValidationContext
 ): [
-  validChange: StabilityDepositChange<Decimal> | undefined,
-  description: JSX.Element | undefined
-] => {
+    validChange: StabilityDepositChange<Decimal> | undefined,
+    description: JSX.Element | undefined
+  ] => {
   const change = originalDeposit.whatChanged(editedLUSD);
 
   if (haveOwnFrontend) {
@@ -70,7 +70,7 @@ export const validateStabilityDepositChange = (
     return [
       undefined,
       <ErrorDescription>
-        You're not allowed to withdraw LUSD from your Stability Deposit when there are
+        You're not allowed to withdraw USM from your Stability Deposit when there are
         undercollateralized Troves. Please liquidate those Troves or try again later.
       </ErrorDescription>
     ];

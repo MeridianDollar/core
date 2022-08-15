@@ -63,7 +63,7 @@ export const FrontendRegistration: React.FC = () => {
 
                   setKickbackRate(newKickbackRate);
                   setCut(newCut);
-                } catch {}
+                } catch { }
               }}
               onBlur={() => {
                 setKickbackRateString(kickbackRate.mul(100).toString());
@@ -98,7 +98,7 @@ export const FrontendRegistration: React.FC = () => {
 
         <Paragraph sx={{ fontSize: 1, mt: 3 }}>
           You are about to register <b>{shortenAddress(account)}</b> to receive{" "}
-          <b>{cut.mul(100).toString()}%</b> of the LQTY rewards earned through this frontend.
+          <b>{cut.mul(100).toString()}%</b> of the MER rewards earned through this frontend.
         </Paragraph>
 
         <Paragraph sx={{ fontSize: 1, mt: 3, fontWeight: "bold" }}>

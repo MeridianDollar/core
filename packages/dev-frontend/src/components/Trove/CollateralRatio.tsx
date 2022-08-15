@@ -32,24 +32,24 @@ export const CollateralRatio: React.FC<CollateralRatioProps> = ({ value, change 
             value?.gt(CRITICAL_COLLATERAL_RATIO)
               ? "success"
               : value?.gt(1.2)
-              ? "warning"
-              : value?.lte(1.2)
-              ? "danger"
-              : "muted"
+                ? "warning"
+                : value?.lte(1.2)
+                  ? "danger"
+                  : "muted"
           }
           pendingAmount={
             change?.positive?.absoluteValue?.gt(10)
               ? "++"
               : change?.negative?.absoluteValue?.gt(10)
-              ? "--"
-              : changePct?.nonZeroish(2)?.prettify()
+                ? "--"
+                : changePct?.nonZeroish(2)?.prettify()
           }
           pendingColor={change?.positive ? "success" : "danger"}
           infoIcon={
             <InfoIcon
               tooltip={
                 <Card variant="tooltip" sx={{ width: "220px" }}>
-                  The ratio between the dollar value of the collateral and the debt (in LUSD) you are
+                  The ratio between the dollar value of the collateral and the debt (in USM) you are
                   depositing. While the Minimum Collateral Ratio is 110% during normal operation, it
                   is recommended to keep the Collateral Ratio always above 150% to avoid liquidation
                   under Recovery Mode. A Collateral Ratio above 200% or 250% is recommended for
