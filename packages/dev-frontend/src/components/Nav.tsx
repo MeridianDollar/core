@@ -1,23 +1,38 @@
-import { Flex, Box } from "theme-ui";
+
+
+import { Flex, Box, Badge, Text } from "theme-ui";
 import { Link } from "./Link";
+
+const TemporaryNewBadge = () => {
+  const isBeforeOctober2022 = new Date() < new Date("2022-10-01");
+  if (!isBeforeOctober2022) return null;
+  return (
+    <Badge ml={1} sx={{ fontSize: "12px" }}>
+      New
+    </Badge>
+  );
+};
 
 export const Nav: React.FC = () => {
   return (
     <Box as="nav" sx={{ display: ["none", "flex"], alignItems: "center", flex: 1 }}>
-      <Flex sx={{ justifyContent: "start", ml: 10, flex: 1 }}>
-        <Link sx={{ fontSize: 1 }} to="/">Dashboard</Link>
-        {/* <Link sx={{ fontSize: 1 }} to="/farm">Farm</Link> */}
+      <Flex>
+        <Link to="/">Dashboard</Link>
+      </Flex>
+      <Flex sx={{ justifyContent: "flex-end", mr: 3, flex: 1 }}>
         <Link sx={{ fontSize: 1 }} to="/risky-troves">
           Risky Troves
         </Link>
         <Link sx={{ fontSize: 1 }} to="/redemption">
           Redemption
         </Link>
+        <Link sx={{ fontSize: 1 }} to="https://github.com/">
+          Github
+        </Link>
+        <Link sx={{ fontSize: 1 }} to="https://github.com/">
+          Docs
+        </Link>
       </Flex>
-      {/* <Flex sx={{ justifyContent: "flex-end", mr: 3 }}>
-        <Link sx={{ fontSize: 1 }} to="/">Select Network</Link>
-  </Flex> */}
     </Box>
   );
 };
-

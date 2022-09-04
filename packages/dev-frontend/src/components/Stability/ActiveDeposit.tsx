@@ -93,7 +93,7 @@ export const ActiveDeposit: React.FC = () => {
                 <InfoIcon
                   tooltip={
                     <Card variant="tooltip" sx={{ width: "240px" }}>
-                      Although the MER rewards accrue every minute, the value on the UI only updates
+                      Although the sTLOS rewards accrue every minute, the value on the UI only updates
                       when a user transacts with the Stability Pool. Therefore you may receive more
                       rewards than is displayed when you claim or adjust your deposit.
                     </Card>
@@ -113,12 +113,9 @@ export const ActiveDeposit: React.FC = () => {
             &nbsp;Adjust
           </Button>
 
-          <ClaimRewards disabled={!hasGain && !hasReward}>Claim TLOS and MER</ClaimRewards>
+          <ClaimRewards disabled={!hasGain && !hasReward}>Claim sTLOS</ClaimRewards>
         </Flex>
 
-        {hasTrove && (
-          <ClaimAndMove disabled={!hasGain}>Claim MER and move TLOS to Trove</ClaimAndMove>
-        )}
       </Box>
 
       {isWaitingForTransaction && <LoadingOverlay />}

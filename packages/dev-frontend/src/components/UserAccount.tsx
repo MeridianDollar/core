@@ -38,7 +38,6 @@ export const UserAccount: React.FC = () => {
         {([
           ["TLOS", accountBalance],
           [COIN, lusdBalance],
-          [GT, lqtyBalance]
         ] as const).map(([currency, balance], i) => (
           <Flex key={i} sx={{ ml: 3, flexDirection: "column" }}>
             <Heading sx={{ fontSize: 1 }}>{currency}</Heading>

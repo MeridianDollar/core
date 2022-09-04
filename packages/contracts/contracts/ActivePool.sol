@@ -3,10 +3,13 @@
 pragma solidity 0.6.11;
 
 import './Interfaces/IActivePool.sol';
+import './Interfaces/IStakedTLOS.sol';
+import './Interfaces/ICommunityIssuance.sol';
 import "./Dependencies/SafeMath.sol";
 import "./Dependencies/Ownable.sol";
 import "./Dependencies/CheckContract.sol";
 import "./Dependencies/console.sol";
+
 
 /*
  * The Active Pool holds the ETH collateral and LUSD debt (but not LUSD tokens) for all active troves.
@@ -19,7 +22,7 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
     using SafeMath for uint256;
 
     string constant public NAME = "ActivePool";
-
+    
     address public borrowerOperationsAddress;
     address public troveManagerAddress;
     address public stabilityPoolAddress;
@@ -27,12 +30,23 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
     uint256 internal ETH;  // deposited ether tracker
     uint256 internal LUSDDebt;
 
+        
+    IStakedTLOS public stakedTLOS;
+    ICommunityIssuance public communityIssuance;
+    
+
     // --- Events ---
 
     event BorrowerOperationsAddressChanged(address _newBorrowerOperationsAddress);
     event TroveManagerAddressChanged(address _newTroveManagerAddress);
     event ActivePoolLUSDDebtUpdated(uint _LUSDDebt);
     event ActivePoolETHBalanceUpdated(uint _ETH);
+
+
+    constructor(ICommunityIssuance _communityIssuance) public {
+        stakedTLOS = IStakedTLOS(0x5A9b40A59109a848b82a0Ff153910bb595082e09);
+        communityIssuance = ICommunityIssuance(_communityIssuance);
+    }
 
     // --- Contract setters ---
 
@@ -69,7 +83,7 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
     * Returns the ETH state variable.
     *
     *Not necessarily equal to the the contract's raw ETH balance - ether can be forcibly sent to contracts.
-    */
+    */  
     function getETH() external view override returns (uint) {
         return ETH;
     }
@@ -80,26 +94,56 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
 
     // --- Pool functionality ---
 
-    function sendETH(address _account, uint _amount) external override {
-        _requireCallerIsBOorTroveMorSP();
+    function sendLockedETH(address _account, uint _amount) external override {
+        
+        // _requireCallerIsBOorTroveMorSP();
         ETH = ETH.sub(_amount);
+
+        stakedTLOS.withdraw(_amount, _account, address(this));
+        // _harvestSTlosRewards();
+
         emit ActivePoolETHBalanceUpdated(ETH);
         emit EtherSent(_account, _amount);
+    }
 
-        (bool success, ) = _account.call{ value: _amount }("");
-        require(success, "ActivePool: sending ETH failed");
+    function sendETH(address _account, uint _amount) external override {
+        
+        // _requireCallerIsBOorTroveMorSP();
+        ETH = ETH.sub(_amount);
+
+        uint sTLOSToSend = stakedTLOS.convertToShares(_amount);
+        stakedTLOS.safeTransfer(_account, sTLOSToSend);
+        _harvestSTlosRewards();
+
+        emit ActivePoolETHBalanceUpdated(ETH);
+        emit EtherSent(_account, _amount);
     }
 
     function increaseLUSDDebt(uint _amount) external override {
         _requireCallerIsBOorTroveM();
         LUSDDebt  = LUSDDebt.add(_amount);
         ActivePoolLUSDDebtUpdated(LUSDDebt);
+        _harvestSTlosRewards();
     }
 
     function decreaseLUSDDebt(uint _amount) external override {
         _requireCallerIsBOorTroveMorSP();
         LUSDDebt = LUSDDebt.sub(_amount);
         ActivePoolLUSDDebtUpdated(LUSDDebt);
+        _harvestSTlosRewards();
+    }
+  
+    function _harvestSTlosRewards() internal {
+
+        uint256 STLOSBalance = stakedTLOS.balanceOf(address(this));
+
+        // Check the latest conversion between TLOS:sTLOS
+        uint256 TLOSToSTLOS = stakedTLOS.convertToShares(ETH);
+        uint256 yieldToHarvest = STLOSBalance - TLOSToSTLOS;
+        // iteration = yieldToHarvest;
+        if(yieldToHarvest>0){
+            stakedTLOS.safeTransfer(address(communityIssuance), yieldToHarvest);
+        }
     }
 
     // --- 'require' functions ---
@@ -129,8 +173,9 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
     // --- Fallback function ---
 
     receive() external payable {
-        _requireCallerIsBorrowerOperationsOrDefaultPool();
+        // _requireCallerIsBorrowerOperationsOrDefaultPool();
         ETH = ETH.add(msg.value);
+        stakedTLOS.depositTLOS{value: msg.value }();
         emit ActivePoolETHBalanceUpdated(ETH);
     }
 }

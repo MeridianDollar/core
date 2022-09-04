@@ -61,7 +61,7 @@ const UnsupportedMainnetFallback: React.FC = () => (
     </Paragraph>
 
     <Paragraph>
-      If you'd like to use the Liquity Protocol on mainnet, please pick a frontend{" "}
+      If you'd like to use the Meridian Protocol on mainnet, please pick a frontend{" "}
       <Link href="https://www.liquity.org/frontend">
         here <Icon name="external-link-alt" size="xs" />
       </Link>
@@ -89,10 +89,10 @@ const App = () => {
       }}
     >
       <Heading sx={{ mb: 3 }}>
-        <Icon name="exclamation-triangle" /> Liquity is not yet deployed to{" "}
+        <Icon name="exclamation-triangle" /> Meridian is not yet deployed to{" "}
         {chainId === 1 ? "mainnet" : "this network"}.
       </Heading>
-      Please switch to Ropsten, Rinkeby, Kovan, Görli or Kiln.
+      Please switch to Telos Mainnet to interact.
     </Flex>
   );
 

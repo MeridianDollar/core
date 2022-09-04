@@ -111,7 +111,7 @@ export const SystemStats: React.FC<SystemStatsProps> = ({ variant = "info", show
       <Statistic name="Troves" tooltip="The total number of active Troves in the system.">
         {Decimal.from(numberOfTroves).prettify(0)}
       </Statistic>
-      <Statistic name="USM supply" tooltip="The total USM minted by the Liquity Protocol.">
+      <Statistic name="USM supply" tooltip="The total USM minted by the Meridian Protocol.">
         {total.debt.shorten()}
       </Statistic>
       {lusdInStabilityPoolPct && (
@@ -124,12 +124,6 @@ export const SystemStats: React.FC<SystemStatsProps> = ({ variant = "info", show
           <Text sx={{ fontSize: 1 }}>&nbsp;({lusdInStabilityPoolPct.toString(1)})</Text>
         </Statistic>
       )}
-      <Statistic
-        name="Staked MER"
-        tooltip="The total amount of MER that is staked for earning fee revenue."
-      >
-        {totalStakedLQTY.shorten()}
-      </Statistic>
       <Statistic
         name="Total Collateral Ratio"
         tooltip="The ratio of the Dollar value of the entire system collateral at the current TLOS:USD price, to the entire system debt."

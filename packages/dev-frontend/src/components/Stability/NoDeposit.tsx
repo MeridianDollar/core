@@ -22,7 +22,7 @@ export const NoDeposit: React.FC = props => {
       </Heading>
       <Box sx={{ p: [2, 3] }}>
         <InfoMessage title="You have no USM in the Stability Pool.">
-          You can earn TLOS rewards by depositing USM.
+          You can earn sTLOS rewards by depositing USM.
         </InfoMessage>
 
         <Flex variant="layout.actions">

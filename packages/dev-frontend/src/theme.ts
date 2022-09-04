@@ -1,8 +1,8 @@
 import { Theme, ThemeUIStyleObject } from "theme-ui";
 
 const baseColors = {
-  blue: "#1542cd",
-  purple: "#745ddf",
+  blue: "#1c4f87",
+  purple: "#2c598a",
   cyan: "#2eb6ea",
   green: "#28c081",
   yellow: "#fd9d28",
@@ -363,7 +363,7 @@ const theme: Theme = {
       width: "100%",
       maxWidth: "912px",
       mx: "auto",
-      mt: ["40px", 0],
+      mt: ["40px", "40px"],
       mb: ["40px", "40px"],
       px: cardGapX
     },

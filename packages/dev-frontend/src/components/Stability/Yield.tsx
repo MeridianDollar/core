@@ -43,13 +43,13 @@ export const Yield: React.FC = () => {
 
   return (
     <Badge>
-      <Text>MER APR {aprPercentage.toString(2)}%</Text>
+      <Text>APR {aprPercentage.toString(2)}%</Text>
       <InfoIcon
         tooltip={
           <Card variant="tooltip" sx={{ width: ["220px", "518px"] }}>
             <Paragraph>
-              An <Text sx={{ fontWeight: "bold" }}>estimate</Text> of the MER return on the USM
-              deposited to the Stability Pool over the next year, not including your TLOS gains from
+              An <Text sx={{ fontWeight: "bold" }}>estimate</Text> of the sTLOS return on the USM
+              deposited to the Stability Pool over the next year, not including your sTLOS gains from
               liquidations.
             </Paragraph>
             <Paragraph sx={{ fontSize: "12px", fontFamily: "monospace", mt: 2 }}>
