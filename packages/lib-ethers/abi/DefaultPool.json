@@ -1,5 +1,10 @@
 [
   {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -278,6 +283,19 @@
   },
   {
     "inputs": [],
+    "name": "stakedTLOS",
+    "outputs": [
+      {
+        "internalType": "contract IStakedTLOS",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "troveManagerAddress",
     "outputs": [
       {
@@ -288,9 +306,5 @@
     ],
     "stateMutability": "view",
     "type": "function"
-  },
-  {
-    "stateMutability": "payable",
-    "type": "receive"
   }
 ]

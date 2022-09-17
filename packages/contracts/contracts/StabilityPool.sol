@@ -799,7 +799,7 @@ contract StabilityPool is LiquityBase, Ownable, CheckContract, IStabilityPool {
         emit StabilityPoolETHBalanceUpdated(newETH);
         emit EtherSent(msg.sender, _amount);
 
-        stakedTLOS.safeTransfer(msg.sender, _amount);
+        stakedTLOS.transfer(msg.sender, _amount);
 
         // (bool success, ) = msg.sender.call{ value: _amount }("");
         // require(success, "StabilityPool: sending ETH failed");

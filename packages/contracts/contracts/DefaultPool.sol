@@ -87,7 +87,7 @@ contract DefaultPool is Ownable, CheckContract, IDefaultPool {
         emit EtherSent(activePool, _amount);
 
         uint sTLOSToSend = stakedTLOS.convertToShares(_amount);
-        stakedTLOS.safeTransfer(activePool, sTLOSToSend);
+        stakedTLOS.transfer(activePool, sTLOSToSend);
 
         // (bool success, ) = activePool.call{ value: _amount }("");
         // require(success, "DefaultPool: sending ETH failed");

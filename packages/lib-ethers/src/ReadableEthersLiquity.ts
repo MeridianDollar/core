@@ -51,14 +51,14 @@ const userTroveStatusFrom = (backendStatus: BackendTroveStatus): UserTroveStatus
   backendStatus === BackendTroveStatus.nonExistent
     ? "nonExistent"
     : backendStatus === BackendTroveStatus.active
-    ? "open"
-    : backendStatus === BackendTroveStatus.closedByOwner
-    ? "closedByOwner"
-    : backendStatus === BackendTroveStatus.closedByLiquidation
-    ? "closedByLiquidation"
-    : backendStatus === BackendTroveStatus.closedByRedemption
-    ? "closedByRedemption"
-    : panic(new Error(`invalid backendStatus ${backendStatus}`));
+      ? "open"
+      : backendStatus === BackendTroveStatus.closedByOwner
+        ? "closedByOwner"
+        : backendStatus === BackendTroveStatus.closedByLiquidation
+          ? "closedByLiquidation"
+          : backendStatus === BackendTroveStatus.closedByRedemption
+            ? "closedByRedemption"
+            : panic(new Error(`invalid backendStatus ${backendStatus}`));
 
 const convertToDate = (timestamp: number) => new Date(timestamp * 1000);
 
@@ -281,7 +281,7 @@ export class ReadableEthersLiquity implements ReadableLiquity {
     const { communityIssuance } = _getContracts(this.connection);
 
     const issuanceCap = this.connection.totalStabilityPoolLQTYReward;
-    const totalLQTYIssued = decimalify(await communityIssuance.totalLQTYIssued({ ...overrides }));
+    const totalLQTYIssued = 0;
 
     // totalLQTYIssued approaches but never reaches issuanceCap
     return issuanceCap.sub(totalLQTYIssued);
