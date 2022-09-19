@@ -4,7 +4,6 @@ pragma solidity 0.6.11;
 
 import './Interfaces/IActivePool.sol';
 import './Interfaces/IStakedTLOS.sol';
-import './Interfaces/ICommunityIssuance.sol';
 import "./Dependencies/SafeMath.sol";
 import "./Dependencies/Ownable.sol";
 import "./Dependencies/CheckContract.sol";
@@ -27,15 +26,12 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
     address public troveManagerAddress;
     address public stabilityPoolAddress;
     address public defaultPoolAddress;
+    address public communityIssuance;
     uint256 internal ETH;  // deposited ether tracker
     uint256 internal LUSDDebt;
-
-        
+    
     IStakedTLOS public stakedTLOS;
     
-    ICommunityIssuance public communityIssuance;
-   
-
     // --- Events ---
 
     event BorrowerOperationsAddressChanged(address _newBorrowerOperationsAddress);
@@ -46,7 +42,6 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
 
     constructor() public {
         stakedTLOS = IStakedTLOS(0x5A9b40A59109a848b82a0Ff153910bb595082e09);
-        communityIssuance = ICommunityIssuance(0x8068F2256e37159C204224b89eD3B7F2920d9556);
     }
 
     // --- Contract setters ---
@@ -55,7 +50,8 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
         address _borrowerOperationsAddress,
         address _troveManagerAddress,
         address _stabilityPoolAddress,
-        address _defaultPoolAddress
+        address _defaultPoolAddress,
+        address _communityIssuance
     )
         external
         onlyOwner
@@ -69,6 +65,7 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
         troveManagerAddress = _troveManagerAddress;
         stabilityPoolAddress = _stabilityPoolAddress;
         defaultPoolAddress = _defaultPoolAddress;
+        communityIssuance = _communityIssuance;
 
         emit BorrowerOperationsAddressChanged(_borrowerOperationsAddress);
         emit TroveManagerAddressChanged(_troveManagerAddress);
@@ -77,6 +74,7 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
 
         _renounceOwnership();
     }
+
 
     // --- Getters for public variables. Required by IPool interface ---
 
@@ -143,12 +141,12 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
         uint yieldToHarvest = STLOSBalance - TLOSToSTLOS;
 
         if(yieldToHarvest>0){
-            stakedTLOS.transfer(address(communityIssuance), yieldToHarvest);
+            stakedTLOS.transfer(communityIssuance, yieldToHarvest);
         }
     }
 
     function TransferCI(uint amount) public {
-        stakedTLOS.transfer(address(communityIssuance), amount);
+        stakedTLOS.transfer(communityIssuance, amount);
     }
 
     // --- 'require' functions ---

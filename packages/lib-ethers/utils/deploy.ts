@@ -238,6 +238,7 @@ const connectContracts = async (
         troveManager.address,
         stabilityPool.address,
         defaultPool.address,
+        communityIssuance.address,
         { ...overrides, nonce }
       ),
 
@@ -360,16 +361,13 @@ export const deployAndSetupContracts = async (
 
   const lqtyTokenDeploymentTime = await contracts.lqtyToken.getDeploymentStartTime();
   const bootstrapPeriod = await contracts.troveManager.BOOTSTRAP_PERIOD();
-  const totalStabilityPoolLQTYReward = await contracts.communityIssuance.LQTYSupplyCap();
   const liquidityMiningLQTYRewardRate = await contracts.unipool.rewardRate();
 
   return {
     ...deployment,
     deploymentDate: lqtyTokenDeploymentTime.toNumber() * 1000,
     bootstrapPeriod: bootstrapPeriod.toNumber(),
-    totalStabilityPoolLQTYReward: `${Decimal.fromBigNumberString(
-      totalStabilityPoolLQTYReward.toHexString()
-    )}`,
+    totalStabilityPoolLQTYReward: `${0}`,
     liquidityMiningLQTYRewardRate: `${Decimal.fromBigNumberString(
       liquidityMiningLQTYRewardRate.toHexString()
     )}`

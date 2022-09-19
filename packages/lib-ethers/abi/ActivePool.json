@@ -229,7 +229,7 @@
     "name": "communityIssuance",
     "outputs": [
       {
-        "internalType": "contract ICommunityIssuance",
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -384,6 +384,11 @@
       {
         "internalType": "address",
         "name": "_defaultPoolAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_communityIssuance",
         "type": "address"
       }
     ],
