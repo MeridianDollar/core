@@ -1,5 +1,3 @@
-
-
 import { Flex, Box, Badge, Text } from "theme-ui";
 import { Link } from "./Link";
 
@@ -25,12 +23,6 @@ export const Nav: React.FC = () => {
         </Link>
         <Link sx={{ fontSize: 1 }} to="/redemption">
           Redemption
-        </Link>
-        <Link sx={{ fontSize: 1 }} to="https://github.com/">
-          Github
-        </Link>
-        <Link sx={{ fontSize: 1 }} to="https://github.com/">
-          Docs
         </Link>
       </Flex>
     </Box>

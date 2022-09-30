@@ -28,7 +28,6 @@ interface ActivePoolCalls {
 }
 
 interface ActivePoolTransactions {
-  TransferCI(amount: BigNumberish, _overrides?: Overrides): Promise<void>;
   decreaseLUSDDebt(_amount: BigNumberish, _overrides?: Overrides): Promise<void>;
   increaseLUSDDebt(_amount: BigNumberish, _overrides?: Overrides): Promise<void>;
   sendETH(_account: string, _amount: BigNumberish, _overrides?: Overrides): Promise<void>;

@@ -4,6 +4,7 @@ pragma solidity 0.6.11;
 
 import './Interfaces/IActivePool.sol';
 import './Interfaces/IStakedTLOS.sol';
+import './Interfaces/ICommunityIssuance.sol';
 import "./Dependencies/SafeMath.sol";
 import "./Dependencies/Ownable.sol";
 import "./Dependencies/CheckContract.sol";
@@ -17,6 +18,7 @@ import "./Dependencies/console.sol";
  * Stability Pool, the Default Pool, or both, depending on the liquidation conditions.
  *
  */
+
 contract ActivePool is Ownable, CheckContract, IActivePool {
     using SafeMath for uint256;
 
@@ -41,7 +43,7 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
 
 
     constructor() public {
-        stakedTLOS = IStakedTLOS(0x5A9b40A59109a848b82a0Ff153910bb595082e09);
+        stakedTLOS = IStakedTLOS(0xa9991E4daA44922D00a78B6D986cDf628d46C4DD);
     }
 
     // --- Contract setters ---
@@ -138,15 +140,13 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
 
         // Check the latest conversion between TLOS:sTLOS
         uint TLOSToSTLOS = stakedTLOS.convertToShares(ETH);
-        uint yieldToHarvest = STLOSBalance - TLOSToSTLOS;
-
-        if(yieldToHarvest>0){
+        if(STLOSBalance>TLOSToSTLOS){
+            uint yieldToHarvest = STLOSBalance - TLOSToSTLOS;
             stakedTLOS.transfer(communityIssuance, yieldToHarvest);
         }
-    }
 
-    function TransferCI(uint amount) public {
-        stakedTLOS.transfer(communityIssuance, amount);
+
+
     }
 
     // --- 'require' functions ---

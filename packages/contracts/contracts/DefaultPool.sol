@@ -34,7 +34,7 @@ contract DefaultPool is Ownable, CheckContract, IDefaultPool {
     IStakedTLOS public stakedTLOS;
 
     constructor() public {
-        stakedTLOS = IStakedTLOS(0x5A9b40A59109a848b82a0Ff153910bb595082e09);
+        stakedTLOS = IStakedTLOS(0xa9991E4daA44922D00a78B6D986cDf628d46C4DD);
     }
 
 

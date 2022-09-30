@@ -172,7 +172,7 @@ contract StabilityPool is LiquityBase, Ownable, CheckContract, IStabilityPool {
     uint256 internal totalLUSDDeposits;
 
     constructor() public {
-        stakedTLOS = IStakedTLOS(0x5A9b40A59109a848b82a0Ff153910bb595082e09);
+        stakedTLOS = IStakedTLOS(0xa9991E4daA44922D00a78B6D986cDf628d46C4DD);
     }
 
 
@@ -476,6 +476,8 @@ contract StabilityPool is LiquityBase, Ownable, CheckContract, IStabilityPool {
     * Only called by liquidation functions in the TroveManager.
     */
     function offset(uint _debtToOffset, uint _collToAdd) external override {
+
+        uint _collToAddConverted = stakedTLOS.convertToShares(_collToAdd);
         _requireCallerIsTroveManager();
         uint totalLUSD = totalLUSDDeposits; // cached to save an SLOAD
         if (totalLUSD == 0 || _debtToOffset == 0) { return; }
@@ -483,7 +485,7 @@ contract StabilityPool is LiquityBase, Ownable, CheckContract, IStabilityPool {
         _triggerLQTYIssuance(communityIssuance);
 
         (uint ETHGainPerUnitStaked,
-            uint LUSDLossPerUnitStaked) = _computeRewardsPerUnitStaked(_collToAdd, _debtToOffset, totalLUSD);
+            uint LUSDLossPerUnitStaked) = _computeRewardsPerUnitStaked(_collToAddConverted, _debtToOffset, totalLUSD);
 
         _updateRewardSumAndProduct(ETHGainPerUnitStaked, LUSDLossPerUnitStaked);  // updates S and P
 
@@ -618,6 +620,7 @@ contract StabilityPool is LiquityBase, Ownable, CheckContract, IStabilityPool {
         Snapshots memory snapshots = depositSnapshots[_depositor];
 
         uint ETHGain = _getETHGainFromSnapshots(initialDeposit, snapshots);
+
         return ETHGain;
     }
 

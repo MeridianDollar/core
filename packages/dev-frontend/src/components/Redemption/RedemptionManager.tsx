@@ -78,7 +78,7 @@ export const RedemptionManager: React.FC = () => {
       : [
         true,
         <ActionDescription>
-          You will receive <Amount>{ethAmount.sub(ethFee).prettify(4)} TLOS</Amount> in exchange for{" "}
+          You will receive <Amount>{ethAmount.sub(ethFee).prettify(4)} sTLOS</Amount> in exchange for{" "}
           <Amount>
             {lusdAmount.prettify()} {COIN}
           </Amount>
