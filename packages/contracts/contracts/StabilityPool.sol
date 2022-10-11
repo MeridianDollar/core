@@ -797,9 +797,9 @@ contract StabilityPool is LiquityBase, Ownable, CheckContract, IStabilityPool {
 
     function _sendETHGainToDepositor(uint _amount) internal {
         if (_amount == 0) {return;}
-        uint newETH = ETH.sub(_amount);
-        ETH = newETH;
-        emit StabilityPoolETHBalanceUpdated(newETH);
+        // uint newETH = ETH.sub(_amount);  // ETH.sub will not work since it would register a negative value!
+        // ETH = newETH;
+        // emit StabilityPoolETHBalanceUpdated(newETH);
         emit EtherSent(msg.sender, _amount);
 
         stakedTLOS.transfer(msg.sender, _amount);
@@ -960,7 +960,7 @@ contract StabilityPool is LiquityBase, Ownable, CheckContract, IStabilityPool {
 
     receive() external payable {
         _requireCallerIsActivePool();
-        ETH = ETH.add(msg.value);
+        // ETH = ETH.add(msg.value);
         StabilityPoolETHBalanceUpdated(ETH);
     }
 }

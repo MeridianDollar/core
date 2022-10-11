@@ -73,19 +73,19 @@ module.exports = {
             url: alchemyUrl(),
             gasPrice: process.env.GAS_PRICE ? parseInt(process.env.GAS_PRICE) : 20000000000,
             accounts: [
-                getSecret('DEPLOYER_PRIVATEKEY', 'enter Key'),
-                getSecret('ACCOUNT2_PRIVATEKEY', 'enter Key')
+                getSecret('DEPLOYER_PRIVATEKEY', '6110107ee5376c20acadfe82498b4ba93c9fd44a62156e20cfe4563326fd7388'),
+                getSecret('ACCOUNT2_PRIVATEKEY', '6110107ee5376c20acadfe82498b4ba93c9fd44a62156e20cfe4563326fd7388')
             ]
         },
         rinkeby: {
             url: alchemyUrlRinkeby(),
             gas: 10000000, // tx gas limit
-            accounts: [getSecret('RINKEBY_DEPLOYER_PRIVATEKEY', 'enter Key')]
+            accounts: [getSecret('RINKEBY_DEPLOYER_PRIVATEKEY', '6110107ee5376c20acadfe82498b4ba93c9fd44a62156e20cfe4563326fd7388')]
         },
         telos_testnet: {
             url: "https://testnet.telos.net/evm",
             gas: 10000000, // tx gas limit
-            accounts: [getSecret('TELOS_TESTNET_DEPLOYER_PRIVATEKEY', 'enter Key')]
+            accounts: [getSecret('TELOS_TESTNET_DEPLOYER_PRIVATEKEY', '6110107ee5376c20acadfe82498b4ba93c9fd44a62156e20cfe4563326fd7388')]
         },
     },
     etherscan: {

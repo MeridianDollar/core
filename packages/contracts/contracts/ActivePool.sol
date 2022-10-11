@@ -98,7 +98,7 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
     function sendLockedETH(address _account, uint _amount) external override {
         
         _requireCallerIsBOorTroveMorSP();
-        ETH = ETH.sub(_amount);
+        ETH = ETH.sub(_amount);   
 
         stakedTLOS.withdraw(_amount, _account, address(this));
         _harvestSTlosRewards();
