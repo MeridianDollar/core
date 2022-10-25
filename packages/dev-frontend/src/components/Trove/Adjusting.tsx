@@ -229,6 +229,26 @@ export const Adjusting: React.FC = () => {
           }
         />
 
+
+        <StaticRow
+
+          label="Rewards"
+          inputId="trove-interest-fee"
+          amount={fee.prettify(2)}
+          pendingAmount={"5.5%"}
+          color='green'
+          unit={"STLOS"}
+          infoIcon={
+            <InfoIcon
+              tooltip={
+                <Card variant="tooltip" sx={{ width: "240px" }}>
+                  This is the interest rate that will be paid to you for borrowing on Meridian.
+                </Card>
+              }
+            />
+          }
+        />
+
         <StaticRow
           label="Total debt"
           inputId="trove-total-debt"

@@ -165,6 +165,24 @@ export const Opening: React.FC = () => {
         />
 
         <StaticRow
+          label="Borrowing Fee"
+          inputId="trove-borrowing-fee"
+          amount={fee.prettify(2)}
+          pendingAmount={feePct.toString(2)}
+          unit={COIN}
+          infoIcon={
+            <InfoIcon
+              tooltip={
+                <Card variant="tooltip" sx={{ width: "240px" }}>
+                  This amount is deducted from the borrowed amount as a one-time fee. There are no
+                  recurring fees for borrowing, which is thus interest-free.
+                </Card>
+              }
+            />
+          }
+        />
+
+        <StaticRow
           label="Total debt"
           inputId="trove-total-debt"
           amount={totalDebt.prettify(2)}

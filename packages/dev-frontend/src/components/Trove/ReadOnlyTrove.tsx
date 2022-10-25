@@ -25,7 +25,7 @@ export const ReadOnlyTrove: React.FC = () => {
   return (
     <Card>
       <Heading>Trove</Heading>
-      <Box sx={{ p: [2, 3] }}>
+      <Box sx={{ p: [1, 3] }}>
         <Box>
           <DisabledEditableRow
             label="Collateral"
@@ -45,12 +45,15 @@ export const ReadOnlyTrove: React.FC = () => {
         </Box>
 
         <Flex variant="layout.actions">
-          <Button variant="outline" onClick={handleCloseTrove}>
-            Close Trove
+          <Button variant="outline" onClick={handleCloseTrove} sx={{ fontSize: "14px" }}>
+            Claim Rewards
           </Button>
-          <Button onClick={handleAdjustTrove}>
-            <Icon name="pen" size="sm" />
-            &nbsp;Adjust
+          <Button variant="outline" onClick={handleCloseTrove} sx={{ fontSize: "14px" }}>
+            &nbsp;&nbsp;Close &nbsp;&nbsp;Trove
+          </Button>
+          <Button onClick={handleAdjustTrove} sx={{ fontSize: "14px" }}>
+            &nbsp;&nbsp;<Icon name="pen" size="sm" />
+            &nbsp;&nbsp;Adjust&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </Button>
         </Flex>
       </Box>

@@ -29,6 +29,12 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
     address public stabilityPoolAddress;
     address public defaultPoolAddress;
     address public communityIssuance;
+    address public borrowerRewardsPool;
+    address public devAddress;
+    
+    uint256 public borrowerRewardsFactor;
+    uint256 public stabilityPoolRewardsFactor;
+    uint256 public protocolFeeFactor;
     uint256 internal ETH;  // deposited ether tracker
     uint256 internal LUSDDebt;
     
@@ -53,7 +59,9 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
         address _troveManagerAddress,
         address _stabilityPoolAddress,
         address _defaultPoolAddress,
-        address _communityIssuance
+        address _communityIssuance,
+        address _borrowerRewardsPool,
+        address _devAddress
     )
         external
         onlyOwner
@@ -68,6 +76,8 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
         stabilityPoolAddress = _stabilityPoolAddress;
         defaultPoolAddress = _defaultPoolAddress;
         communityIssuance = _communityIssuance;
+        borrowerRewardsPool = _borrowerRewardsPool;
+        devAddress = _devAddress;
 
         emit BorrowerOperationsAddressChanged(_borrowerOperationsAddress);
         emit TroveManagerAddressChanged(_troveManagerAddress);
@@ -98,7 +108,7 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
     function sendLockedETH(address _account, uint _amount) external override {
         
         _requireCallerIsBOorTroveMorSP();
-        ETH = ETH.sub(_amount);   
+        ETH = ETH.sub(_amount);
 
         stakedTLOS.withdraw(_amount, _account, address(this));
         _harvestSTlosRewards();
@@ -141,8 +151,15 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
         // Check the latest conversion between TLOS:sTLOS
         uint TLOSToSTLOS = stakedTLOS.convertToShares(ETH);
         if(STLOSBalance>TLOSToSTLOS){
+            
             uint yieldToHarvest = STLOSBalance - TLOSToSTLOS;
-            stakedTLOS.transfer(communityIssuance, yieldToHarvest);
+            uint borrowerRewards = (yieldToHarvest.div(10000)).mul(borrowerRewardsFactor);
+            uint stabilityPoolRewards = (yieldToHarvest.div(10000)).mul(borrowerRewardsFactor);
+            uint protocolFee = (yieldToHarvest.div(10000)).mul(borrowerRewardsFactor);
+
+            stakedTLOS.transfer(communityIssuance, stabilityPoolRewards);
+            stakedTLOS.transfer(devAddress, protocolFee);
+            stakedTLOS.transfer(borrowerRewardsPool, borrowerRewards);
         }
 
 
@@ -181,6 +198,12 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
         return stakedTLOS.convertToShares(ETH);
     }
 
+    function setRewardsDistribution(uint256 _borrowerRewardsFactor, uint256 _stabilityPoolRewardsFactor, uint256 _protocolFeeFactor ) public onlyOwner {
+        require(_borrowerRewardsFactor.add(_stabilityPoolRewardsFactor).add(_protocolFeeFactor) == 10000, "Inputs must add up to 10000");
+        borrowerRewardsFactor   = _borrowerRewardsFactor;
+        stabilityPoolRewardsFactor = _stabilityPoolRewardsFactor;
+        protocolFeeFactor = _protocolFeeFactor;
+    }
 
     // --- Fallback function ---
 
