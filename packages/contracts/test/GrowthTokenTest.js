@@ -34,7 +34,7 @@ contract('LQTY Token', async accounts => {
         value: 1,
     }
 
-    const A_PrivateKey = '6110107ee5376c20acadfe82498b4ba93c9fd44a62156e20cfe4563326fd7388'
+    const A_PrivateKey = 'PRIVATE KEY'
 
     let contracts
     let lqtyTokenTester

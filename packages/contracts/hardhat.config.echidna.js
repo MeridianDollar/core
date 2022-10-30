@@ -4,7 +4,7 @@ require("solidity-coverage");
 require("hardhat-gas-reporter");
 
 const accountsList = [{
-    privateKey: "6110107ee5376c20acadfe82498b4ba93c9fd44a62156e20cfe4563326fd7388",
+    privateKey: "PRIVATE KEY",
     balance: "0xffffffffffffffffffffffff"
 }, ]
 

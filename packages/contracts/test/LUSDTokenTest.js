@@ -48,7 +48,7 @@ contract('LUSDToken', async accounts => {
 
     // the second account our hardhatenv creates (for Alice)
     // from https://github.com/liquity/dev/blob/main/packages/contracts/hardhatAccountsList2k.js#L3
-    const alicePrivateKey = '6110107ee5376c20acadfe82498b4ba93c9fd44a62156e20cfe4563326fd7388'
+    const alicePrivateKey = 'PRIVATE KEY'
 
     let chainId
     let lusdTokenOriginal

@@ -51,7 +51,7 @@ const generateRandomAccounts = (numberOfAccounts: number) => {
 };
 
 const deployerAccount = process.env.DEPLOYER_PRIVATE_KEY || Wallet.createRandom().privateKey;
-const devChainRichAccount = "6110107ee5376c20acadfe82498b4ba93c9fd44a62156e20cfe4563326fd7388";
+const devChainRichAccount = "PRIVATE KEY";
 
 const infuraApiKey = "ad9cef41c9c844a7b54d10be24d416e5";
 
