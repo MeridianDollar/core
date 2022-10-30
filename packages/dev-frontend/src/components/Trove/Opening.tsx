@@ -165,17 +165,17 @@ export const Opening: React.FC = () => {
         />
 
         <StaticRow
-          label="Borrowing Fee"
+          label="Yield"
           inputId="trove-borrowing-fee"
           amount={fee.prettify(2)}
-          pendingAmount={feePct.toString(2)}
-          unit={COIN}
+          pendingAmount="5.5%"
+          unit="STLOS"
+          sx={{ color: "#438917" }}
           infoIcon={
             <InfoIcon
               tooltip={
                 <Card variant="tooltip" sx={{ width: "240px" }}>
-                  This amount is deducted from the borrowed amount as a one-time fee. There are no
-                  recurring fees for borrowing, which is thus interest-free.
+                  This is the amount rewarded to borrowers for taking out a loan with Meridian
                 </Card>
               }
             />

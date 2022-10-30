@@ -217,6 +217,8 @@ const connectContracts = async (
         sortedTroves.address,
         lusdToken.address,
         lqtyStaking.address,
+        "0xa9991E4daA44922D00a78B6D986cDf628d46C4DD",
+        "0xa9991E4daA44922D00a78B6D986cDf628d46C4DD",
         { ...overrides, nonce }
       ),
 
@@ -239,6 +241,8 @@ const connectContracts = async (
         stabilityPool.address,
         defaultPool.address,
         communityIssuance.address,
+        "0xa9991E4daA44922D00a78B6D986cDf628d46C4DD",
+        "0xa9991E4daA44922D00a78B6D986cDf628d46C4DD",
         { ...overrides, nonce }
       ),
 

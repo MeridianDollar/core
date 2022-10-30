@@ -8,6 +8,8 @@ import "./Interfaces/ILUSDToken.sol";
 import "./Interfaces/ICollSurplusPool.sol";
 import "./Interfaces/ISortedTroves.sol";
 import "./Interfaces/ILQTYStaking.sol";
+import "./Interfaces/IBorrowerAccountingToken.sol";
+import "./Interfaces/IBorrowerRewards.sol";
 import "./Dependencies/LiquityBase.sol";
 import "./Dependencies/Ownable.sol";
 import "./Dependencies/CheckContract.sol";
@@ -21,15 +23,18 @@ contract BorrowerOperations is LiquityBase, Ownable, CheckContract, IBorrowerOpe
     ITroveManager public troveManager;
 
     address stabilityPoolAddress;
-
     address gasPoolAddress;
 
-    ICollSurplusPool collSurplusPool;
+    ICollSurplusPool collSurplusPool; 
 
     ILQTYStaking public lqtyStaking;
     address public lqtyStakingAddress;
 
     ILUSDToken public lusdToken;
+
+    IBorrowerAccountingToken public borrowerAccountingToken;
+    IBorrowerRewards public borrowerRewards;
+
 
     // A doubly linked list of Troves, sorted by their collateral ratios
     ISortedTroves public sortedTroves;
@@ -104,7 +109,9 @@ contract BorrowerOperations is LiquityBase, Ownable, CheckContract, IBorrowerOpe
         address _priceFeedAddress,
         address _sortedTrovesAddress,
         address _lusdTokenAddress,
-        address _lqtyStakingAddress
+        address _lqtyStakingAddress,
+        address _borrowerAccountingToken,
+        address _borrowerRewards
     )
         external
         override
@@ -123,6 +130,8 @@ contract BorrowerOperations is LiquityBase, Ownable, CheckContract, IBorrowerOpe
         checkContract(_sortedTrovesAddress);
         checkContract(_lusdTokenAddress);
         checkContract(_lqtyStakingAddress);
+        checkContract(_borrowerAccountingToken);
+        checkContract(_borrowerRewards);
 
         troveManager = ITroveManager(_troveManagerAddress);
         activePool = IActivePool(_activePoolAddress);
@@ -135,6 +144,8 @@ contract BorrowerOperations is LiquityBase, Ownable, CheckContract, IBorrowerOpe
         lusdToken = ILUSDToken(_lusdTokenAddress);
         lqtyStakingAddress = _lqtyStakingAddress;
         lqtyStaking = ILQTYStaking(_lqtyStakingAddress);
+        borrowerAccountingToken = IBorrowerAccountingToken(_borrowerAccountingToken);
+        borrowerRewards = IBorrowerRewards(_borrowerRewards);
 
         emit TroveManagerAddressChanged(_troveManagerAddress);
         emit ActivePoolAddressChanged(_activePoolAddress);
@@ -205,6 +216,10 @@ contract BorrowerOperations is LiquityBase, Ownable, CheckContract, IBorrowerOpe
         _withdrawLUSD(contractsCache.activePool, contractsCache.lusdToken, gasPoolAddress, LUSD_GAS_COMPENSATION, LUSD_GAS_COMPENSATION);
 
         // Mint accounting token to the BorrowerRewards contract
+        borrowerAccountingToken.mint(address(this), msg.value);
+        //Deposit Minted tokens into BorrowerRewardsContract
+        borrowerRewards.stake(msg.value, msg.sender);
+
 
         emit TroveUpdated(msg.sender, vars.compositeDebt, msg.value, vars.stake, BorrowerOperation.openTrove);
         emit LUSDBorrowingFeePaid(msg.sender, vars.LUSDFee);
@@ -347,8 +362,15 @@ contract BorrowerOperations is LiquityBase, Ownable, CheckContract, IBorrowerOpe
         _repayLUSD(activePoolCached, lusdTokenCached, msg.sender, debt.sub(LUSD_GAS_COMPENSATION));
         _repayLUSD(activePoolCached, lusdTokenCached, gasPoolAddress, LUSD_GAS_COMPENSATION);
 
+
+        //Unstake accounting tokens from BorrowerRewardsContract
+        borrowerRewards.unstake(coll, msg.sender);
+        // Burn accounting token to the burn contract
+        borrowerAccountingToken.burn(coll);
+        
         // Send the collateral back to the user
         activePoolCached.sendLockedETH(msg.sender, coll);
+
     }
 
     /**
@@ -438,15 +460,25 @@ contract BorrowerOperations is LiquityBase, Ownable, CheckContract, IBorrowerOpe
 
         if (_isCollIncrease) {
             _activePoolAddColl(_activePool, _collChange);
+            // Mint accounting token to the BorrowerRewards contract
+            borrowerAccountingToken.mint(address(this), _collChange);
+            //Deposit Minted tokens into BorrowerRewardsContract
+            borrowerRewards.stake(_collChange, msg.sender);
         } else {
+            
+            //Unstake accounting tokens from BorrowerRewardsContract
+            borrowerRewards.unstake(_collChange, msg.sender);
+            // Burn accounting token to the burn contract
+            borrowerAccountingToken.burn(_collChange);
             _activePool.sendLockedETH(_borrower, _collChange);
+
         }
     }
 
-    // Send ETH to Active Pool and increase its recorded ETH balance
+    // Send TLOS to Active Pool and increase its recorded TLOS balance
     function _activePoolAddColl(IActivePool _activePool, uint _amount) internal {
         (bool success, ) = address(_activePool).call{value: _amount}("");
-        require(success, "BorrowerOps: Sending ETH to ActivePool failed");
+        require(success, "BorrowerOps: Sending TLOS to ActivePool failed");
     }
 
     // Issue the specified amount of LUSD to _account and increases the total active debt (_netDebtIncrease potentially includes a LUSDFee)

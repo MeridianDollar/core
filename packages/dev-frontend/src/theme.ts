@@ -1,7 +1,7 @@
 import { Theme, ThemeUIStyleObject } from "theme-ui";
 
 const baseColors = {
-  blue: "#1c4f87",
+  blue: "#1b4f87",
   purple: "#2c598a",
   cyan: "#2eb6ea",
   green: "#28c081",
@@ -20,11 +20,11 @@ const colors = {
   danger: baseColors.red,
   dangerHover: baseColors.lightRed,
   info: baseColors.blue,
-  invalid: "pink",
+  invalid: "#pink",
 
-  text: "#293147",
-  background: "white",
-  muted: "#eaebed"
+  text: "#e3e3e3",
+  background: "#121c34",  // "#191326",
+  muted: "#1b4f87"
 };
 
 const buttonBase: ThemeUIStyleObject = {
@@ -54,7 +54,7 @@ const button: ThemeUIStyleObject = {
 const buttonOutline = (color: string, hoverColor: string): ThemeUIStyleObject => ({
   color,
   borderColor: color,
-  background: "none",
+  background: "#none",
 
   ":enabled:hover": {
     color: "background",
@@ -96,7 +96,7 @@ const infoCard: ThemeUIStyleObject = {
   padding: 3,
 
   borderColor: "rgba(122,199,240,0.4)",
-  background: "linear-gradient(200deg, #d4d9fc, #cae9f9)",
+  background: "linear-gradient(200deg, #121c34, #1d293b)",
 
   h2: {
     mb: 2,
@@ -117,7 +117,7 @@ const formCell: ThemeUIStyleObject = {
 
   bg: "background",
   border: 1,
-  borderColor: "muted",
+  borderColor: "#1b4f87",
   borderRadius: 0,
   boxShadow: [1, 2]
 };
@@ -141,7 +141,7 @@ const modalOverlay: ThemeUIStyleObject = {
 };
 
 const headerGradient: ThemeUIStyleObject = {
-  background: `linear-gradient(90deg, ${colors.background}, ${colors.muted})`
+  background: `linear-gradient(90deg, ${colors.background}, ${colors.background})`
 };
 
 const theme: Theme = {
@@ -207,7 +207,7 @@ const theme: Theme = {
 
     outline: {
       ...button,
-      ...buttonOutline("primary", "secondary")
+      ...buttonOutline("#121c34", "#2c5989")
     },
 
     cancel: {
@@ -254,8 +254,8 @@ const theme: Theme = {
 
       padding: 0,
 
-      borderColor: "muted",
-      bg: "background",
+      borderColor: "#406580",
+      bg: "#334155",
 
       "> h2": {
         display: "flex",
@@ -268,7 +268,7 @@ const theme: Theme = {
         py: 2,
         pr: 2,
 
-        bg: "muted",
+        bg: "#1d293b",
 
         fontSize: cardHeadingFontSize
       }
@@ -296,7 +296,7 @@ const theme: Theme = {
       padding: 2,
 
       border: 1,
-      borderColor: "muted",
+      borderColor: "#1b4f87",
       borderRadius: "4px",
       bg: "background",
       boxShadow: 2,

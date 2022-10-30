@@ -41,7 +41,7 @@ export const PriceManager: React.FC = () => {
             step="any"
             value={editedPrice}
             onChange={e => setEditedPrice(e.target.value)}
-            disabled={canSetPrice}
+            disabled={!canSetPrice}
           />
 
           {canSetPrice && (
@@ -58,7 +58,7 @@ export const PriceManager: React.FC = () => {
                 }}
               >
                 <Button variant="icon">
-
+                  <Icon name="chart-line" size="lg" />
                 </Button>
               </Transaction>
             </Flex>

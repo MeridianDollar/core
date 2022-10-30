@@ -422,6 +422,16 @@
           "internalType": "address",
           "name": "_lqtyStakingAddress",
           "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_borrowerAccountingToken",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_borrowerRewards",
+          "type": "address"
         }
       ],
       "name": "setAddresses",

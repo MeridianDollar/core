@@ -411,6 +411,32 @@
   },
   {
     "inputs": [],
+    "name": "borrowerAccountingToken",
+    "outputs": [
+      {
+        "internalType": "contract IBorrowerAccountingToken",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "borrowerRewards",
+    "outputs": [
+      {
+        "internalType": "contract IBorrowerRewards",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "claimCollateral",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -683,6 +709,16 @@
       {
         "internalType": "address",
         "name": "_lqtyStakingAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_borrowerAccountingToken",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_borrowerRewards",
         "type": "address"
       }
     ],

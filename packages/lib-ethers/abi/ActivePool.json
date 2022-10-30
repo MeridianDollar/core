@@ -187,6 +187,32 @@
   },
   {
     "inputs": [],
+    "name": "borrowerRewards",
+    "outputs": [
+      {
+        "internalType": "contract IBorrowerRewards",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "borrowerRewardsFactor",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "checkSTLOSBalance",
     "outputs": [
       {
@@ -240,6 +266,19 @@
   {
     "inputs": [],
     "name": "defaultPoolAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "devAddress",
     "outputs": [
       {
         "internalType": "address",
@@ -316,6 +355,26 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "protocolFeeFactor",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -377,9 +436,42 @@
         "internalType": "address",
         "name": "_communityIssuance",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_borrowerRewards",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_devAddress",
+        "type": "address"
       }
     ],
     "name": "setAddresses",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_borrowerRewardsFactor",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_stabilityPoolRewardsFactor",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_protocolFeeFactor",
+        "type": "uint256"
+      }
+    ],
+    "name": "setRewardsDistribution",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -392,6 +484,19 @@
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "stabilityPoolRewardsFactor",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",

@@ -5,6 +5,7 @@ pragma solidity 0.6.11;
 import './Interfaces/IActivePool.sol';
 import './Interfaces/IStakedTLOS.sol';
 import './Interfaces/ICommunityIssuance.sol';
+import './Interfaces/IBorrowerRewards.sol';
 import "./Dependencies/SafeMath.sol";
 import "./Dependencies/Ownable.sol";
 import "./Dependencies/CheckContract.sol";
@@ -29,7 +30,6 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
     address public stabilityPoolAddress;
     address public defaultPoolAddress;
     address public communityIssuance;
-    address public borrowerRewardsPool;
     address public devAddress;
     
     uint256 public borrowerRewardsFactor;
@@ -39,6 +39,7 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
     uint256 internal LUSDDebt;
     
     IStakedTLOS public stakedTLOS;
+    IBorrowerRewards public borrowerRewards;
     
     // --- Events ---
 
@@ -60,7 +61,7 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
         address _stabilityPoolAddress,
         address _defaultPoolAddress,
         address _communityIssuance,
-        address _borrowerRewardsPool,
+        address _borrowerRewards,
         address _devAddress
     )
         external
@@ -70,23 +71,23 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
         checkContract(_troveManagerAddress);
         checkContract(_stabilityPoolAddress);
         checkContract(_defaultPoolAddress);
+        checkContract(_borrowerRewards);
 
         borrowerOperationsAddress = _borrowerOperationsAddress;
         troveManagerAddress = _troveManagerAddress;
         stabilityPoolAddress = _stabilityPoolAddress;
         defaultPoolAddress = _defaultPoolAddress;
         communityIssuance = _communityIssuance;
-        borrowerRewardsPool = _borrowerRewardsPool;
         devAddress = _devAddress;
+
+        borrowerRewards = IBorrowerRewards(_borrowerRewards);
 
         emit BorrowerOperationsAddressChanged(_borrowerOperationsAddress);
         emit TroveManagerAddressChanged(_troveManagerAddress);
         emit StabilityPoolAddressChanged(_stabilityPoolAddress);
         emit DefaultPoolAddressChanged(_defaultPoolAddress);
 
-        _renounceOwnership();
     }
-
 
     // --- Getters for public variables. Required by IPool interface ---
 
@@ -153,17 +154,14 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
         if(STLOSBalance>TLOSToSTLOS){
             
             uint yieldToHarvest = STLOSBalance - TLOSToSTLOS;
-            uint borrowerRewards = (yieldToHarvest.div(10000)).mul(borrowerRewardsFactor);
+            uint borrowerRewardsValue = (yieldToHarvest.div(10000)).mul(borrowerRewardsFactor);
             uint stabilityPoolRewards = (yieldToHarvest.div(10000)).mul(borrowerRewardsFactor);
             uint protocolFee = (yieldToHarvest.div(10000)).mul(borrowerRewardsFactor);
 
-            stakedTLOS.transfer(communityIssuance, stabilityPoolRewards);
             stakedTLOS.transfer(devAddress, protocolFee);
-            stakedTLOS.transfer(borrowerRewardsPool, borrowerRewards);
+            stakedTLOS.transfer(communityIssuance, stabilityPoolRewards);
+            borrowerRewards.increaseF_STLOS(borrowerRewardsValue);
         }
-
-
-
     }
 
     // --- 'require' functions ---
@@ -200,9 +198,13 @@ contract ActivePool is Ownable, CheckContract, IActivePool {
 
     function setRewardsDistribution(uint256 _borrowerRewardsFactor, uint256 _stabilityPoolRewardsFactor, uint256 _protocolFeeFactor ) public onlyOwner {
         require(_borrowerRewardsFactor.add(_stabilityPoolRewardsFactor).add(_protocolFeeFactor) == 10000, "Inputs must add up to 10000");
-        borrowerRewardsFactor   = _borrowerRewardsFactor;
+        borrowerRewardsFactor = _borrowerRewardsFactor;
         stabilityPoolRewardsFactor = _stabilityPoolRewardsFactor;
         protocolFeeFactor = _protocolFeeFactor;
+    }
+
+    function renounceOwnership() public onlyOwner {
+        _renounceOwnership();
     }
 
     // --- Fallback function ---

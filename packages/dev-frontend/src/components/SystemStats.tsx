@@ -98,6 +98,12 @@ export const SystemStats: React.FC<SystemStatsProps> = ({ variant = "info", show
       >
         {borrowingFeePct.toString(2)}
       </Statistic>
+      <Statistic
+        name="Yield"
+        tooltip="This is the amount rewarded to borrowers for taking out a loan with Meridian"
+      >
+        5.5%
+      </Statistic>
 
       <Statistic
         name="TVL"
